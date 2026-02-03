@@ -3,6 +3,7 @@ export enum GamePhase {
   INTRO = 'INTRO',
   PLAYING = 'PLAYING',
   FEEDBACK = 'FEEDBACK',
+  MARKET_EVENT = 'MARKET_EVENT',
   GAME_OVER = 'GAME_OVER'
 }
 
@@ -28,6 +29,15 @@ export interface Scenario {
   prompt: string;
   options: ScenarioOption[];
   iconType: 'strategy' | 'database' | 'mobile' | 'system';
+}
+
+export interface MarketEvent {
+  id: string;
+  title: string;
+  description: string;
+  explanation: string; // Detailed breakdown of the mechanics
+  impact: KPIChange;
+  type: 'POSITIVE' | 'NEGATIVE' | 'CHAOS';
 }
 
 export interface Team {
@@ -57,4 +67,5 @@ export interface GameState {
     totalChange: number;
     feedbackText: string;
   } | null;
+  currentMarketEvent: MarketEvent | null;
 }

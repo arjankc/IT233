@@ -15,6 +15,7 @@ const INITIAL_SCORE = Math.floor(INITIAL_KPIs.revenue + INITIAL_KPIs.innovation 
 const TeamScoreDisplay: React.FC<{ team: Team; isActive: boolean }> = ({ team, isActive }) => {
   const [highlight, setHighlight] = useState(false);
   const [prevScore, setPrevScore] = useState(team.score);
+  const [delta, setDelta] = useState<number | null>(null);
   const color = TEAM_COLORS[team.id % TEAM_COLORS.length];
 
   // Calculate Net Change
@@ -23,17 +24,26 @@ const TeamScoreDisplay: React.FC<{ team: Team; isActive: boolean }> = ({ team, i
 
   useEffect(() => {
     if (team.score !== prevScore) {
+      const diff = team.score - prevScore;
+      setDelta(diff);
       setHighlight(true);
-      const timer = setTimeout(() => setHighlight(false), 1000); 
+      
+      const highlightTimer = setTimeout(() => setHighlight(false), 1000); 
+      const deltaTimer = setTimeout(() => setDelta(null), 1500); // Clear delta after animation
+
       setPrevScore(team.score);
-      return () => clearTimeout(timer);
+      
+      return () => {
+        clearTimeout(highlightTimer);
+        clearTimeout(deltaTimer);
+      };
     }
   }, [team.score, prevScore]);
 
   return (
     <div 
       className={`
-        relative flex-1 p-2 md:p-3 rounded-xl border-2 transition-all duration-300 overflow-hidden min-w-0
+        relative flex-1 p-2 md:p-3 rounded-xl border-2 transition-all duration-300 overflow-visible min-w-0
         ${isActive ? `${color.border} scale-105 bg-slate-800 shadow-[0_0_25px_rgba(0,0,0,0.6)] z-10` : 'border-slate-600 bg-slate-800/80 opacity-70 hover:opacity-100'}
       `}
     >
@@ -44,6 +54,16 @@ const TeamScoreDisplay: React.FC<{ team: Team; isActive: boolean }> = ({ team, i
       )}
       
       <div className="flex flex-col relative z-10">
+        {/* Floating Delta Animation */}
+        {delta !== null && (
+          <div 
+            key={Date.now()} // Force re-render for animation restart if rapid updates
+            className={`absolute -top-8 right-0 left-0 text-center text-2xl font-black animate-float-up z-50 pointer-events-none drop-shadow-md ${delta >= 0 ? 'text-emerald-400' : 'text-red-500'}`}
+          >
+            {delta >= 0 ? '+' : ''}{delta}
+          </div>
+        )}
+
         {/* Header */}
         <div className="flex justify-between items-start mb-1">
           <span className={`text-[10px] md:text-xs font-bold truncate uppercase tracking-wider ${isActive ? 'text-white' : 'text-slate-400'} max-w-[70%]`}>

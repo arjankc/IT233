@@ -1,4 +1,4 @@
-import { Scenario, Team } from './types';
+import { Scenario, Team, MarketEvent } from './types';
 
 // Simple beep sounds encoded as Data URIs
 export const SOUNDS = {
@@ -11,6 +11,57 @@ export const MAX_ROUNDS = 5;
 
 // Initial Team State
 export const INITIAL_KPIs = { revenue: 100, innovation: 50, risk: 10 };
+
+export const MARKET_EVENTS: MarketEvent[] = [
+  {
+    id: 'event-boom',
+    title: 'Economic Boom',
+    description: 'The global economy is surging! Consumer spending is up, increasing revenue for all sectors.',
+    explanation: 'Higher disposable income drives up sales volume across all sectors. Innovation budgets expand as investors become less risk-averse.',
+    impact: { revenue: 20, innovation: 5, risk: 0 },
+    type: 'POSITIVE'
+  },
+  {
+    id: 'event-crash',
+    title: 'Market Recession',
+    description: 'Inflation has hit record highs. Customers are tightening their belts, reducing revenue across the board.',
+    explanation: 'Consumer spending contracts significantly. R&D budgets are slashed to preserve cash flow, and market volatility increases slight risks.',
+    impact: { revenue: -15, innovation: -5, risk: 5 },
+    type: 'NEGATIVE'
+  },
+  {
+    id: 'event-cyber',
+    title: 'Global Cyber War',
+    description: 'State-sponsored hackers are targeting infrastructure. Security risks have skyrocketed for everyone.',
+    explanation: 'Widespread attacks force diversion of resources to defense. While operational revenue takes a hit due to downtime, the primary impact is a massive spike in security risk profiles.',
+    impact: { revenue: -5, innovation: 0, risk: 25 },
+    type: 'CHAOS'
+  },
+  {
+    id: 'event-reg',
+    title: 'GDPR 2.0',
+    description: 'Strict new data privacy laws have passed. Compliance costs are high, slowing down innovation.',
+    explanation: 'Compliance mandates force process changes, reducing operational efficiency (Revenue) and slowing down feature velocity (Innovation), but ultimately hardening data security (Risk decreases).',
+    impact: { revenue: -10, innovation: -15, risk: -10 }, // Risk goes down because forced compliance improves security
+    type: 'NEGATIVE'
+  },
+  {
+    id: 'event-tech',
+    title: 'AI Breakthrough',
+    description: 'A new open-source AI model has been released. Productivity (Innovation) is up, but so are the risks of deepfakes.',
+    explanation: 'New tools drastically accelerate product development (Innovation) and slightly boost productivity. However, the lack of governance increases the surface area for reputational and security risks.',
+    impact: { revenue: 5, innovation: 20, risk: 15 },
+    type: 'CHAOS'
+  },
+  {
+    id: 'event-supply',
+    title: 'Chip Shortage',
+    description: 'Supply chain disruptions are delaying hardware deliveries. Revenue takes a hit due to lack of inventory.',
+    explanation: 'Hardware constraints limit the ability to fulfill orders, directly impacting revenue. Innovation stalls as engineers focus on sourcing alternative components rather than new features.',
+    impact: { revenue: -20, innovation: -5, risk: 0 },
+    type: 'NEGATIVE'
+  }
+];
 
 export const SCENARIOS: Scenario[] = [
   // --- UNIT 1: FOUNDATIONS ---
@@ -122,6 +173,33 @@ export const SCENARIOS: Scenario[] = [
       }
     ]
   },
+  {
+    id: 'foundations-5',
+    unit: 'Foundations',
+    title: 'Serverless Shift',
+    iconType: 'system',
+    prompt: 'Our web app crashes whenever we launch a flash sale because the servers cannot handle the sudden traffic spike.',
+    options: [
+      { 
+        id: 'opt1', 
+        text: 'Refactor backend to a Serverless Architecture.', 
+        impact: { revenue: 15, innovation: 30, risk: 5 }, 
+        feedback: 'Elasticity achieved. The system auto-scales infinitely during sales and costs near zero when idle. Brilliant.' 
+      },
+      { 
+        id: 'opt2', 
+        text: 'Permanently provision 100 extra servers.', 
+        impact: { revenue: -25, innovation: 0, risk: 0 }, 
+        feedback: 'Wasteful. You handle the traffic, but you are paying for idle servers 99% of the time.' 
+      },
+      { 
+        id: 'opt3', 
+        text: 'Implement a "Waiting Room" queue for users.', 
+        impact: { revenue: -10, innovation: 0, risk: 5 }, 
+        feedback: 'Frustrating. Customers hate waiting. They left and bought from a competitor.' 
+      }
+    ]
+  },
 
   // --- UNIT 2: STRATEGY ---
   {
@@ -229,6 +307,33 @@ export const SCENARIOS: Scenario[] = [
         text: 'Double down on "In-Store Experience" only.', 
         impact: { revenue: -10, innovation: 5, risk: 35 }, 
         feedback: 'Obsolescence. The experience is great, but foot traffic continues to decline.' 
+      }
+    ]
+  },
+  {
+    id: 'strategy-7',
+    unit: 'Strategy',
+    title: 'GenAI Wild West',
+    iconType: 'strategy',
+    prompt: 'Employees are pasting sensitive company data into public Generative AI tools to write emails and code faster.',
+    options: [
+      { 
+        id: 'opt1', 
+        text: 'Secure an Enterprise License for a private AI instance.', 
+        impact: { revenue: -5, innovation: 45, risk: -15 }, 
+        feedback: 'Visionary. It was expensive, but now your team innovates safely without leaking trade secrets.' 
+      },
+      { 
+        id: 'opt2', 
+        text: 'Ban all Generative AI tools immediately.', 
+        impact: { revenue: 0, innovation: -20, risk: -5 }, 
+        feedback: 'Safe but Slow. Your data is secure, but your competitors are now working 10x faster than you.' 
+      },
+      { 
+        id: 'opt3', 
+        text: 'Ignore it and let them use the free public versions.', 
+        impact: { revenue: 10, innovation: 20, risk: 60 }, 
+        feedback: 'Data Leak. An employee pasted your upcoming product roadmap into a public bot. Now it is on the internet.' 
       }
     ]
   },
@@ -369,6 +474,60 @@ export const SCENARIOS: Scenario[] = [
       }
     ]
   },
+  {
+    id: 'data-7',
+    unit: 'Data',
+    title: 'Data Sovereignty',
+    iconType: 'database',
+    prompt: 'New regulations require that all customer data for EU citizens must physically reside within the EU. Your servers are in Texas.',
+    options: [
+      { 
+        id: 'opt1', 
+        text: 'Deploy a Multi-Region Cloud architecture.', 
+        impact: { revenue: -15, innovation: 15, risk: -25 }, 
+        feedback: 'Compliant. It increased infrastructure costs, but you avoided billions in fines and gained trust in Europe.' 
+      },
+      { 
+        id: 'opt2', 
+        text: 'Ignore it and rely on "Safe Harbor" loopholes.', 
+        impact: { revenue: 5, innovation: 0, risk: 50 }, 
+        feedback: 'Illegal. The loopholes were closed. You were audited and fined 4% of your global revenue.' 
+      },
+      { 
+        id: 'opt3', 
+        text: 'Stop doing business in Europe.', 
+        impact: { revenue: -30, innovation: 0, risk: 0 }, 
+        feedback: 'Retreat. You avoided the risk, but you just voluntarily gave up a huge market to your rivals.' 
+      }
+    ]
+  },
+  {
+    id: 'data-8',
+    unit: 'Data',
+    title: 'The Biased Algo',
+    iconType: 'database',
+    prompt: 'Your new AI tool for approving loans is rejecting women and minorities at a statistically higher rate.',
+    options: [
+      { 
+        id: 'opt1', 
+        text: 'Audit the training data and retrain the model.', 
+        impact: { revenue: -10, innovation: 10, risk: -20 }, 
+        feedback: 'Ethical. You found historical bias in the data and fixed it. The model is now fair and accurate.' 
+      },
+      { 
+        id: 'opt2', 
+        text: 'Keep using it; math is objective.', 
+        impact: { revenue: 10, innovation: 5, risk: 60 }, 
+        feedback: 'PR Disaster. Investigative journalists exposed the bias. You are being sued for discrimination.' 
+      },
+      { 
+        id: 'opt3', 
+        text: 'Switch back to manual review by humans.', 
+        impact: { revenue: -20, innovation: -15, risk: -5 }, 
+        feedback: 'Regression. You solved the bias, but your loan processing time went from seconds to days.' 
+      }
+    ]
+  },
 
   // --- UNIT 4: MOBILE & IoT ---
   {
@@ -503,6 +662,33 @@ export const SCENARIOS: Scenario[] = [
         text: 'Switch to pre-programmed flight paths (no remote control).', 
         impact: { revenue: 10, innovation: -5, risk: 20 }, 
         feedback: 'Rigid. It works fine until a bird hits a drone and it cannot react. Flexibility is zero.' 
+      }
+    ]
+  },
+  {
+    id: 'iot-4',
+    unit: 'Mobile/IoT',
+    title: 'AR Maintenance',
+    iconType: 'mobile',
+    prompt: 'Field technicians are carrying heavy paper manuals and struggle to identify parts in complex machinery.',
+    options: [
+      { 
+        id: 'opt1', 
+        text: 'Equip techs with AR headsets to overlay schematics.', 
+        impact: { revenue: 20, innovation: 40, risk: 10 }, 
+        feedback: 'Augmented Reality. Repair times dropped by 40% because the glasses show exactly which bolt to turn.' 
+      },
+      { 
+        id: 'opt2', 
+        text: 'Digitize manuals into PDF format on tablets.', 
+        impact: { revenue: 10, innovation: 10, risk: 0 }, 
+        feedback: 'Incremental Step. It is lighter than paper, but scrolling through PDFs is still slow on a small screen.' 
+      },
+      { 
+        id: 'opt3', 
+        text: 'Rely on "Tribal Knowledge" (memory).', 
+        impact: { revenue: -5, innovation: -10, risk: 30 }, 
+        feedback: 'Error Prone. When the senior tech retired, nobody knew how to fix the legacy turbine. Major outage.' 
       }
     ]
   },
