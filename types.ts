@@ -68,4 +68,6 @@ export interface GameState {
     feedbackText: string;
   } | null;
   currentMarketEvent: MarketEvent | null;
+  usedEventIds: string[];
+  turnsSinceLastEvent: number;
 }

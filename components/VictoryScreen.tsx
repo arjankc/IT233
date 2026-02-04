@@ -41,19 +41,19 @@ const VictoryScreen: React.FC<VictoryScreenProps> = ({ teams, onRestart }) => {
                         <div className="p-4 md:p-5 flex flex-col md:flex-row items-center justify-between gap-4 border-b border-slate-800">
                             <div className="flex items-center gap-4 w-full md:w-auto">
                                  {/* Rank Badge */}
-                                 <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex-shrink-0 flex items-center justify-center font-black text-lg md:text-xl shadow-inner ${index === 0 ? 'bg-gradient-to-br from-yellow-400 to-orange-500 text-black' : 'bg-slate-700 text-slate-400'}`}>
+                                 <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex-shrink-0 flex items-center justify-center font-black text-lg md:text-xl shadow-inner ${index === 0 ? 'bg-gradient-to-br from-yellow-400 to-orange-500 text-black' : 'bg-slate-700 text-slate-200'}`}>
                                     #{index + 1}
                                  </div>
                                  <div className="min-w-0 flex-1">
                                     <h3 className={`text-xl md:text-2xl font-bold ${color.text} truncate`}>{team.name}</h3>
-                                    <div className="flex items-center gap-2 text-slate-500 text-[10px] md:text-xs font-mono uppercase">
+                                    <div className="flex items-center gap-2 text-slate-400 text-[10px] md:text-xs font-mono uppercase">
                                         {index === 0 && <Star size={12} className="text-yellow-500 fill-current" />}
                                         Market Cap History
                                     </div>
                                  </div>
                             </div>
                             <div className="text-right w-full md:w-auto flex justify-between md:block items-center">
-                                 <span className="md:hidden text-slate-500 font-bold text-xs">FINAL VALUATION</span>
+                                 <span className="md:hidden text-slate-400 font-bold text-xs">FINAL VALUATION</span>
                                  <div>
                                      <div className="text-2xl md:text-3xl font-black text-white tracking-tight">${team.score}M</div>
                                  </div>

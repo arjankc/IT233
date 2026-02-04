@@ -35,6 +35,8 @@ const App: React.FC = () => {
     scenarioOrder: [],
     lastFeedback: null,
     currentMarketEvent: null,
+    usedEventIds: [],
+    turnsSinceLastEvent: 0,
   });
 
   // Sound effects helper
@@ -77,6 +79,8 @@ const App: React.FC = () => {
       scenarioOrder: shuffledIds,
       roundsConfigured: calculatedRounds,
       currentMarketEvent: null,
+      usedEventIds: [],
+      turnsSinceLastEvent: 0, // Reset pacing
     }));
 
     setTimeout(() => {
@@ -86,7 +90,7 @@ const App: React.FC = () => {
 
   const nextTurn = (nextIndex: number) => {
     setGameState(prev => {
-        const { scenarioOrder, scenariosPlayed, currentRound, phase, roundsConfigured, teams } = prev;
+        const { scenarioOrder, scenariosPlayed, currentRound, phase, roundsConfigured, teams, usedEventIds, turnsSinceLastEvent } = prev;
         
         // 1. Check Game Over
         const isNewRound = nextIndex === 0 && phase !== GamePhase.INTRO; 
@@ -96,11 +100,26 @@ const App: React.FC = () => {
             return { ...prev, phase: GamePhase.GAME_OVER };
         }
 
-        // 2. Random Market Event Trigger (30% chance, but not on INTRO)
-        const triggerEvent = phase !== GamePhase.INTRO && Math.random() < 0.3;
+        // 2. Market Event Logic
+        // Improvement: Use a "Deck" system to prevent repeats and a "Cooldown" to prevent clustering.
+        
+        const COOLDOWN_TURNS = 2; // Minimum turns between events
+        const EVENT_PROBABILITY = 0.35; // 35% chance if cooldown passed
+        
+        // Only trigger if we are not in intro, cooldown is satisfied
+        const canTriggerEvent = phase !== GamePhase.INTRO && turnsSinceLastEvent >= COOLDOWN_TURNS;
+        const shouldTrigger = canTriggerEvent && Math.random() < EVENT_PROBABILITY;
 
-        if (triggerEvent) {
-             const randomEvent = MARKET_EVENTS[Math.floor(Math.random() * MARKET_EVENTS.length)];
+        if (shouldTrigger) {
+             // Filter out events we've already used to avoid repetition
+             let availableEvents = MARKET_EVENTS.filter(e => !usedEventIds.includes(e.id));
+             
+             // If we've seen them all, reset the pool (allow repeats now)
+             if (availableEvents.length === 0) {
+                 availableEvents = MARKET_EVENTS;
+             }
+
+             const randomEvent = availableEvents[Math.floor(Math.random() * availableEvents.length)];
              
              // Apply impact to ALL teams
              const updatedTeams = teams.map(team => {
@@ -126,7 +145,9 @@ const App: React.FC = () => {
                  currentMarketEvent: randomEvent,
                  teams: updatedTeams,
                  currentTeamIndex: nextIndex,
-                 currentRound: nextRound
+                 currentRound: nextRound,
+                 usedEventIds: [...usedEventIds, randomEvent.id], // Mark as used
+                 turnsSinceLastEvent: 0 // Reset cooldown counter
              };
         }
 
@@ -145,7 +166,8 @@ const App: React.FC = () => {
             currentScenario: selectedScenario,
             currentRound: nextRound,
             lastFeedback: null,
-            currentMarketEvent: null
+            currentMarketEvent: null,
+            turnsSinceLastEvent: turnsSinceLastEvent + 1 // Increment pacing counter
         };
     });
   };
@@ -240,6 +262,8 @@ const App: React.FC = () => {
         scenarioOrder: [],
         lastFeedback: null,
         currentMarketEvent: null,
+        usedEventIds: [],
+        turnsSinceLastEvent: 0,
     });
   };
 
@@ -260,7 +284,7 @@ const App: React.FC = () => {
       {/* Round Indicator - Responsive placement */}
       {gameState.phase !== GamePhase.INTRO && (
         <div className="md:absolute md:top-36 md:left-4 z-0 mt-2 md:mt-0 px-4 md:px-0">
-          <div className="text-slate-500 font-bold text-xs md:text-sm border border-slate-700 p-1.5 px-3 md:p-2 rounded bg-slate-800/80 inline-block">
+          <div className="text-slate-400 font-bold text-xs md:text-sm border border-slate-700 p-1.5 px-3 md:p-2 rounded bg-slate-800/80 inline-block">
             ROUND <span className="text-white">{gameState.currentRound}</span> / {gameState.roundsConfigured}
           </div>
         </div>
@@ -320,7 +344,7 @@ const App: React.FC = () => {
 
                     {/* Team Impact Report */}
                     <div className="w-full max-w-3xl bg-slate-800/80 border border-slate-700 rounded-xl overflow-hidden mb-6">
-                        <div className="bg-slate-950/50 p-2 border-b border-slate-700 flex justify-between px-4 text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest">
+                        <div className="bg-slate-950/50 p-2 border-b border-slate-700 flex justify-between px-4 text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">
                             <span>Entity</span>
                             <span>Net Valuation Impact</span>
                         </div>
@@ -351,7 +375,7 @@ const App: React.FC = () => {
                                                 <div className={`font-black text-base md:text-lg ${isPos ? 'text-emerald-400' : 'text-red-400'}`}>
                                                     {isPos ? '+' : ''}{change}
                                                 </div>
-                                                <div className="text-[9px] md:text-[10px] text-slate-500 font-mono">
+                                                <div className="text-[9px] md:text-[10px] text-slate-400 font-mono">
                                                     NEW VAL: {team.score}M
                                                 </div>
                                             </div>
@@ -482,7 +506,7 @@ const App: React.FC = () => {
                     
                     <div className="flex flex-col md:flex-row items-center justify-between border-t border-slate-700 pt-4 md:pt-6 gap-4 animate-slide-up" style={{ animationDelay: '300ms' }}>
                          <div className="flex flex-col items-center md:items-start">
-                            <span className="text-[10px] md:text-sm text-slate-500 uppercase font-bold">Total Valuation Change</span>
+                            <span className="text-[10px] md:text-sm text-slate-400 uppercase font-bold">Total Valuation Change</span>
                             <div className={`text-3xl md:text-4xl font-black brand-font ${gameState.lastFeedback.totalChange >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
                                 {gameState.lastFeedback.totalChange > 0 ? '+' : ''}{gameState.lastFeedback.totalChange}
                             </div>

@@ -48,7 +48,7 @@ const TeamScoreDisplay: React.FC<{ team: Team; isActive: boolean }> = ({ team, i
       `}
     >
       {isActive && (
-        <div className="absolute -top-2 md:-top-3 left-1/2 -translate-x-1/2 bg-indigo-500 text-white text-[8px] md:text-[10px] uppercase tracking-widest font-bold px-1.5 py-0.5 md:px-3 md:py-1 rounded-full shadow-lg whitespace-nowrap z-20">
+        <div className="absolute -top-2 md:-top-3 left-1/2 -translate-x-1/2 bg-indigo-600 text-white text-[8px] md:text-[10px] uppercase tracking-widest font-bold px-1.5 py-0.5 md:px-3 md:py-1 rounded-full shadow-lg whitespace-nowrap z-20">
           Active
         </div>
       )}
@@ -76,7 +76,7 @@ const TeamScoreDisplay: React.FC<{ team: Team; isActive: boolean }> = ({ team, i
 
         {/* Main Score */}
         <div className="flex items-baseline gap-0.5 md:gap-1 mb-0.5 md:mb-2">
-            <span className="text-slate-500 font-serif text-[10px] md:text-sm">$</span>
+            <span className="text-slate-400 font-serif text-[10px] md:text-sm">$</span>
             <span 
             className={`
                 text-xl md:text-3xl font-black brand-font transition-all duration-500 transform block leading-none
@@ -85,7 +85,7 @@ const TeamScoreDisplay: React.FC<{ team: Team; isActive: boolean }> = ({ team, i
             >
             {team.score}
             </span>
-            <span className="text-[8px] md:text-[10px] text-slate-500 font-bold">M</span>
+            <span className="text-[8px] md:text-[10px] text-slate-400 font-bold">M</span>
         </div>
 
         {/* Graph - Smaller on mobile */}

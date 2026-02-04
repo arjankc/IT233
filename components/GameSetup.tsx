@@ -54,7 +54,7 @@ const GameSetup: React.FC<GameSetupProps> = ({ onStartGame }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {Array.from({ length: teamCount }).map((_, i) => (
               <div key={i} className="flex flex-col">
-                <span className="text-xs md:text-sm text-slate-500 mb-1 ml-1">Team {i + 1}</span>
+                <span className="text-xs md:text-sm text-slate-400 mb-1 ml-1">Team {i + 1}</span>
                 <input
                   type="text"
                   value={names[i]}
