@@ -96,7 +96,10 @@ const App: React.FC = () => {
         const isNewRound = nextIndex === 0 && phase !== GamePhase.INTRO; 
         const nextRound = isNewRound ? currentRound + 1 : currentRound;
 
-        if (scenariosPlayed.length >= scenarioOrder.length || nextRound > roundsConfigured) {
+        // Ensure we don't repeat scenarios by filtering out played ones from the shuffled order
+        const remainingScenarios = scenarioOrder.filter(id => !scenariosPlayed.includes(id));
+
+        if (remainingScenarios.length === 0 || nextRound > roundsConfigured) {
             return { ...prev, phase: GamePhase.GAME_OVER };
         }
 
@@ -152,7 +155,8 @@ const App: React.FC = () => {
         }
 
         // 3. Normal Flow
-        const nextScenarioId = scenarioOrder[scenariosPlayed.length];
+        // Pick the first scenario from our remaining list
+        const nextScenarioId = remainingScenarios[0];
         const selectedScenario = SCENARIOS.find(s => s.id === nextScenarioId) || null;
 
         if (!selectedScenario) {
@@ -176,7 +180,9 @@ const App: React.FC = () => {
       // Transition from Event to Playing (Scenario)
       setGameState(prev => {
           const { scenarioOrder, scenariosPlayed } = prev;
-          const nextScenarioId = scenarioOrder[scenariosPlayed.length];
+          
+          // Find next unplayed scenario using filter logic
+          const nextScenarioId = scenarioOrder.find(id => !scenariosPlayed.includes(id));
           const selectedScenario = SCENARIOS.find(s => s.id === nextScenarioId) || null;
           
           if (!selectedScenario) {
