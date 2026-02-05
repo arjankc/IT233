@@ -20,8 +20,8 @@ const GameSetup: React.FC<GameSetupProps> = ({ onStartGame }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 overflow-y-auto">
-      <div className="max-w-3xl w-full bg-slate-800 border border-slate-700 rounded-3xl p-6 md:p-10 shadow-2xl my-10 md:my-0">
+    <div className="min-h-[100dvh] w-full bg-slate-900 flex flex-col p-4 overflow-y-auto">
+      <div className="max-w-3xl w-full bg-slate-800 border border-slate-700 rounded-3xl p-6 md:p-10 shadow-2xl m-auto">
         <div className="text-center mb-6 md:mb-10">
           <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 mb-2 md:mb-4 brand-font">
             TEAM DUEL

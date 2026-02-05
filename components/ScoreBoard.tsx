@@ -99,7 +99,7 @@ const TeamScoreDisplay: React.FC<{ team: Team; isActive: boolean }> = ({ team, i
 
 const ScoreBoard: React.FC<ScoreBoardProps> = ({ teams, currentTeamIndex }) => {
   return (
-    <div className="w-full bg-slate-900/95 backdrop-blur-md border-b border-slate-700 p-1 md:p-2 shadow-2xl sticky top-0 z-40">
+    <div className="w-full bg-slate-900/95 backdrop-blur-md border-b border-slate-700 p-1 md:p-2 shadow-2xl relative md:sticky md:top-0 z-40">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-1 md:mb-3 px-1 md:px-2">
             <div className="flex items-center gap-1.5 md:gap-2">

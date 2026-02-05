@@ -15,15 +15,13 @@ const VictoryScreen: React.FC<VictoryScreenProps> = ({ teams, onRestart }) => {
   const winner = sortedTeams[0];
 
   return (
-    <div className="h-screen w-full bg-slate-900 overflow-y-auto">
-      {/* Scrollable Content Container using min-h-full to center if content is small, but expand if large */}
-      <div className="min-h-full w-full flex flex-col items-center p-4 py-12">
-        <div className="max-w-4xl w-full bg-slate-800 border border-slate-600 rounded-3xl p-6 md:p-12 text-center shadow-2xl relative my-auto">
+    <div className="min-h-[100dvh] w-full bg-slate-900 flex flex-col p-4 overflow-y-auto">
+      <div className="max-w-4xl w-full bg-slate-800 border border-slate-600 rounded-3xl p-6 md:p-12 text-center shadow-2xl relative m-auto">
           {/* Celebration Background */}
           <div className="absolute inset-0 bg-gradient-to-b from-slate-800 via-slate-800 to-indigo-900/50 opacity-50 rounded-3xl pointer-events-none"></div>
           
           <div className="relative z-10">
-            <Briefcase size={64} md:size={80} className="text-emerald-400 mx-auto mb-4" />
+            <Briefcase size={64} className="md:w-20 md:h-20 text-emerald-400 mx-auto mb-4" />
             
             <h2 className="text-xl md:text-2xl text-slate-300 uppercase tracking-widest font-bold mb-2">Fiscal Year Closed</h2>
             <h1 className="text-4xl md:text-7xl font-black text-white mb-8 brand-font drop-shadow-lg leading-tight">
@@ -79,7 +77,6 @@ const VictoryScreen: React.FC<VictoryScreenProps> = ({ teams, onRestart }) => {
             </button>
           </div>
         </div>
-      </div>
     </div>
   );
 };

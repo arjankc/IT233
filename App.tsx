@@ -278,7 +278,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="h-screen bg-slate-900 flex flex-col relative overflow-y-auto overflow-x-hidden">
+    <div className="h-[100dvh] bg-slate-900 flex flex-col relative overflow-y-auto overflow-x-hidden">
       <ScoreBoard teams={gameState.teams} currentTeamIndex={gameState.currentTeamIndex} />
       
       {/* Round Indicator - Responsive placement */}
