@@ -18,7 +18,7 @@ const VictoryScreen: React.FC<VictoryScreenProps> = ({ teams, onRestart }) => {
     <div className="min-h-[100dvh] w-full bg-slate-900 flex flex-col p-4 overflow-y-auto">
       <div className="max-w-4xl w-full bg-slate-800 border border-slate-600 rounded-3xl p-6 md:p-12 text-center shadow-2xl relative m-auto">
           {/* Celebration Background */}
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-800 via-slate-800 to-indigo-900/50 opacity-50 rounded-3xl pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-800 via-slate-800 to-brand-hover opacity-50 rounded-3xl pointer-events-none"></div>
           
           <div className="relative z-10">
             <Briefcase size={64} className="md:w-20 md:h-20 text-emerald-400 mx-auto mb-4" />
@@ -70,7 +70,7 @@ const VictoryScreen: React.FC<VictoryScreenProps> = ({ teams, onRestart }) => {
 
             <button
               onClick={onRestart}
-              className="bg-indigo-600 hover:bg-indigo-500 text-white text-base md:text-lg font-bold py-3 md:py-4 px-8 md:px-12 rounded-full shadow-lg transition-transform hover:scale-105 flex items-center gap-2 mx-auto"
+              className="bg-brand hover:bg-brand-hover text-white text-base md:text-lg font-bold py-3 md:py-4 px-8 md:px-12 rounded-full shadow-lg transition-transform hover:scale-105 flex items-center gap-2 mx-auto"
             >
               <RefreshCw size={20} />
               Initialize New Session

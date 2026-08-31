@@ -520,7 +520,7 @@ const App: React.FC = () => {
 
                         <button 
                             onClick={handleNextTeam}
-                            className="bg-indigo-600 hover:bg-indigo-500 text-white text-base md:text-xl font-bold py-3 md:py-4 px-8 md:px-10 rounded-lg shadow-lg transition-all hover:translate-x-1 flex items-center gap-3 w-full md:w-auto justify-center active:scale-95"
+                            className="bg-brand hover:bg-brand-hover text-white text-base md:text-xl font-bold py-3 md:py-4 px-8 md:px-10 rounded-lg shadow-lg transition-all hover:translate-x-1 flex items-center gap-3 w-full md:w-auto justify-center active:scale-95"
                         >
                             Next Scenario <ArrowRight />
                         </button>

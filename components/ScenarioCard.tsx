@@ -35,7 +35,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, currentTeam, onOp
 
       {/* Main Briefing Card */}
       <div className="glass-panel rounded-t-xl md:rounded-t-3xl border-b-0 p-4 md:p-10 shadow-2xl relative overflow-hidden bg-slate-900/80">
-        <div className="absolute top-0 left-0 w-1 md:w-2 h-full bg-gradient-to-b from-indigo-500 to-purple-600"></div>
+        <div className="absolute top-0 left-0 w-1 md:w-2 h-full bg-gradient-to-b from-brand to-purple-600"></div>
         
         <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start">
           <div className="hidden md:block flex-shrink-0 bg-slate-800 p-6 rounded-xl shadow-inner border border-slate-600">
@@ -55,7 +55,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, currentTeam, onOp
             <h2 className="hidden md:block text-3xl md:text-5xl font-black text-white mb-6 brand-font leading-tight tracking-tight">
               {scenario.title}
             </h2>
-            <div className="bg-slate-800/50 p-3 md:p-6 rounded-xl md:rounded-r-xl border-l-4 border-indigo-500">
+            <div className="bg-slate-800/50 p-3 md:p-6 rounded-xl md:rounded-r-xl border-l-4 border-brand">
               <p className="text-base md:text-2xl text-slate-200 leading-relaxed font-medium">
                 {scenario.prompt}
               </p>
@@ -75,7 +75,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, currentTeam, onOp
             <button
               key={option.id}
               onClick={() => onOptionSelected(option.id)}
-              className="group relative bg-slate-700 hover:bg-slate-600 border-2 border-slate-600 hover:border-indigo-400 rounded-xl p-4 md:p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-indigo-500/20 flex flex-col h-full min-h-[100px] md:min-h-[180px] text-left active:scale-[0.98]"
+              className="group relative bg-slate-700 hover:bg-slate-600 border-2 border-slate-600 hover:border-brand rounded-xl p-4 md:p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-brand/20 flex flex-col h-full min-h-[100px] md:min-h-[180px] text-left active:scale-[0.98]"
             >
               <div className="absolute top-2 right-2 md:top-4 md:right-4 opacity-10 group-hover:opacity-100 transition-opacity text-2xl md:text-4xl font-black text-white">
                 {String.fromCharCode(65 + index)}
@@ -83,7 +83,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, currentTeam, onOp
               <span className="text-sm md:text-xl font-bold text-slate-200 group-hover:text-white leading-snug mb-2">
                 {option.text}
               </span>
-              <div className="mt-auto pt-2 md:pt-4 flex items-center text-[10px] md:text-sm font-semibold text-indigo-400 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-wider">
+              <div className="mt-auto pt-2 md:pt-4 flex items-center text-[10px] md:text-sm font-semibold text-brand opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-wider">
                 Execute Order <Zap size={14} className="ml-1 inline md:w-4 md:h-4" />
               </div>
             </button>

@@ -48,7 +48,7 @@ const TeamScoreDisplay: React.FC<{ team: Team; isActive: boolean }> = ({ team, i
       `}
     >
       {isActive && (
-        <div className="absolute -top-2 md:-top-3 left-1/2 -translate-x-1/2 bg-indigo-600 text-white text-[8px] md:text-[10px] uppercase tracking-widest font-bold px-1.5 py-0.5 md:px-3 md:py-1 rounded-full shadow-lg whitespace-nowrap z-20">
+        <div className="absolute -top-2 md:-top-3 left-1/2 -translate-x-1/2 bg-brand text-white text-[8px] md:text-[10px] uppercase tracking-widest font-bold px-1.5 py-0.5 md:px-3 md:py-1 rounded-full shadow-lg whitespace-nowrap z-20">
           Active
         </div>
       )}
